@@ -1,8 +1,8 @@
 //I WILL BE BACK AFTER 5 min
 const ytdlDiscord = require("ytdl-core-discord");
 const { MessageEmbed } = require("discord.js")
-const { QUEUE_LIMIT, COLOR } = require("../config.json");
-
+const { QUEUE_LIMIT } = process.env.QUEUE_LIMIT
+const COLOR = "RANDOM"
 module.exports = {
   async play(song, message) {
     const queue = message.client.queue.get(message.guild.id);
@@ -12,7 +12,7 @@ let embed = new MessageEmbed()
     if (!song) {
       queue.channel.leave();
       message.client.queue.delete(message.guild.id);
-      embed.setAuthor("MUSIC QUEUE IS ENDED NOW :/")
+      embed.setAuthor("Music queue go bye bye")
       return queue.textChannel
         .send(embed)
         .catch(console.error);
@@ -49,12 +49,12 @@ let embed = new MessageEmbed()
       })
       .on("error", console.error);
   
-    dispatcher.setVolumeLogarithmic(queue.volume / 100); //VOLUME
-embed.setAuthor("Started Playing Song", message.client.user.displayAvatarURL())
+    dispatcher.setVolumeLogarithmic(queue.volume / 30); //VOLUME
+embed.setAuthor("Playing", message.client.user.displayAvatarURL())
     .setDescription(`**[${song.title}](${song.url})**`)
     
     queue.textChannel
       .send(embed)
-      .catch(err => message.channel.send("UNABLE TO PLAY SONG"));
+      .catch(err => message.channel.send("Mate i have a error maybe that vid was age rest :shrug:"));
   }
 };
